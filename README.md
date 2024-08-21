@@ -186,8 +186,6 @@ jobs:
   - The final step (`shellcheck-shebang-check`) verifies that all shell scripts with a shebang (`#!`) line are checked, ensuring that no script is missed.
   - It processes all files with `.sh` extensions, including those in `./testdata`, but excludes specific paths like `./testdata/test.sh` and any files in `.git` directories.
 
-This workflow helps maintain high code quality and consistency across shell scripts in the repository by leveraging ShellCheck and GitHub Actions.
-```
 
 
 
