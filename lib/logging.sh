@@ -15,6 +15,7 @@ source config.sh
 # Log file location (default: "./logger.log")
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-"./logger.log"}
 
+# 
 # Functions
 
 ########################
