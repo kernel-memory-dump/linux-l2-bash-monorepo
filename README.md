@@ -1,4 +1,10 @@
-### Monorepo Structure
+# Linux L2 Bash Monorepo 
+
+- The proposed monorepo structure organizes Bash scripts by category, stores configurations, documentation, and tests in dedicated directories, and promotes reusability with a shared lib/ directory. 
+
+- It also introduces a projects/ directory for project-specific scripts, enhancing modularity, scalability, and maintainability while ensuring cross-platform compatibility through structured organization and testing.
+
+### Monorepo Structure 
 
 ```
 bash-scripts-repo/
@@ -109,9 +115,8 @@ bash-scripts-repo/
 
 ## Reviewdog ShellCheck Workflow
 
-This GitHub Actions workflow is designed to run ShellCheck on shell scripts within the repository. It ensures that your scripts adhere to best practices and are compatible across different operating systems. 
-Below is a breakdown of how the workflow is configured by default, also see: https://github.com/reviewdog/action-shellcheck
-The workflow invokes the action which does the following:
+This GitHub Actions workflow is designed to run ShellCheck on shell scripts within the repository. It ensures that your scripts adhere to best practices and are compatible across different operating systems. Below is a breakdown of how the workflow is configured:
+
 ```yaml
 name: reviewdog-shellcheck
 on: [pull_request]
