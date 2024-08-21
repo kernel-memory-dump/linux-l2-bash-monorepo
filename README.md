@@ -107,4 +107,87 @@ bash-scripts-repo/
 
 6. To accommodate project-specific scripts within the proposed monorepo structure, you can introduce a dedicated directory for each project under the `scripts/` directory. This approach maintains the modularity and organization while keeping project-specific scripts clearly separated from general-purpose scripts.
 
+## Reviewdog ShellCheck Workflow
+
+This GitHub Actions workflow is designed to run ShellCheck on shell scripts within the repository. It ensures that your scripts adhere to best practices and are compatible across different operating systems. Below is a breakdown of how the workflow is configured:
+
+```yaml
+name: reviewdog-shellcheck
+on: [pull_request]
+jobs:
+  shellcheck:
+    name: runner / shellcheck
+    runs-on: ${{ matrix.os }}
+    strategy:
+      # Run the job on multiple operating systems to ensure cross-platform compatibility
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck-github-pr-check
+        uses: ./
+        with:
+          github_token: ${{ github.token }}
+      - name: shellcheck-github-check
+        uses: ./
+        with:
+          github_token: ${{ github.token }}
+          reporter: github-check
+          level: warning
+          filter_mode: file
+          pattern: '*.sh'
+          path: '.'
+          exclude: './testdata/*'
+          shellcheck_flags: '--external-sources --severity=style'
+      - name: shellcheck-github-pr-review
+        uses: ./
+        with:
+          github_token: ${{ github.token }}
+          reporter: github-pr-review
+          pattern: '*.sh'
+          path: '.'
+          exclude: './testdata/*'
+      - name: shellcheck-shebang-check
+        uses: ./
+        with:
+          github_token: ${{ github.token }}
+          filter_mode: nofilter
+          pattern: |
+            *.sh
+          path: |
+            .
+            ./testdata
+          exclude: |
+            ./testdata/test.sh
+            */.git/*
+          check_all_files_with_shebangs: true
+```
+
+### Workflow Breakdown
+
+- **Name and Trigger**: The workflow is triggered on every pull request (`on: [pull_request]`) to ensure that new changes to the codebase are checked immediately.
+
+- **Cross-Platform Compatibility**: The job runs on multiple operating systems (`ubuntu-latest`, `macos-latest`, `windows-latest`) using a matrix strategy. This ensures that the shell scripts work consistently across different environments.
+
+- **Checkout Code**: The workflow begins by checking out the code from the repository using the `actions/checkout@v4` action.
+
+- **ShellCheck GitHub PR Check**: 
+  - The first check (`shellcheck-github-pr-check`) runs the ShellCheck linter and provides feedback directly in the GitHub pull request interface.
+  
+- **ShellCheck GitHub Check**:
+  - The next step (`shellcheck-github-check`) uses the `github-check` reporter to post the results as GitHub Checks with a warning level. 
+  - It filters files with the `.sh` extension, excluding those in `./testdata/`, and uses specific ShellCheck flags to set the severity level to `style`.
+
+- **ShellCheck GitHub PR Review**:
+  - This step (`shellcheck-github-pr-review`) adds inline comments directly on the PR using the `github-pr-review` reporter.
+  - It checks files with the `.sh` extension, excluding those in `./testdata/`.
+
+- **Shebang Check**:
+  - The final step (`shellcheck-shebang-check`) verifies that all shell scripts with a shebang (`#!`) line are checked, ensuring that no script is missed.
+  - It processes all files with `.sh` extensions, including those in `./testdata`, but excludes specific paths like `./testdata/test.sh` and any files in `.git` directories.
+
+This workflow helps maintain high code quality and consistency across shell scripts in the repository by leveraging ShellCheck and GitHub Actions.
+```
+
+
 
