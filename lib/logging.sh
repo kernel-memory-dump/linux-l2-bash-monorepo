@@ -15,8 +15,12 @@ source config.sh
 # Log file location (default: "./logger.log")
 LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-"./logger.log"}
 
-# 
+# trigger reviewdog
 # Functions
+# also should detect
+$x=1
+# should detect
+y=2
 
 ########################
 # Log message to stderr and file with a timestamp
