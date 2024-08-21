@@ -1,4 +1,10 @@
-### Monorepo Structure
+# Linux L2 Bash Monorepo 
+
+- The proposed monorepo structure organizes Bash scripts by category, stores configurations, documentation, and tests in dedicated directories, and promotes reusability with a shared lib/ directory. 
+
+- It also introduces a projects/ directory for project-specific scripts, enhancing modularity, scalability, and maintainability while ensuring cross-platform compatibility through structured organization and testing.
+
+### Monorepo Structure 
 
 ```
 bash-scripts-repo/
