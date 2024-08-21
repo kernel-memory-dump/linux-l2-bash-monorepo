@@ -18,7 +18,7 @@ LOG_FILE_LOCATION=${LOG_FILE_LOCATION:-"./logger.log"}
 # trigger reviewdog
 # Functions
 # also should detect
-$x=1
+x=1
 # should detect
 y=2
 
