@@ -22,6 +22,8 @@ x=1
 # should detect
 y=2
 
+z=$y1
+
 ########################
 # Log message to stderr and file with a timestamp
 # Arguments:
